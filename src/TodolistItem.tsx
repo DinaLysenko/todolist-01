@@ -2,7 +2,7 @@ import {Button} from './Button.tsx';
 import {FilterType} from './App.tsx';
 
 export type Task = {
-    id: number
+    id: string
     title: string
     isDone: boolean
 }
@@ -11,12 +11,14 @@ type Props = {
     tasks: Task[]
     deleteTask: (id: Task['id']) => void
     filterTasks: (value: FilterType) => void
+    createTask: (task: string) => void
 }
 export const TodolistItem = ({
                                  title,
                                  tasks,
                                  deleteTask,
-                                 filterTasks
+                                 filterTasks,
+                                 createTask,
                              }: Props) => {
 
     const listItem = tasks.length == 0 ? 'Тасок нет' : tasks.map(t => {
@@ -36,15 +38,15 @@ export const TodolistItem = ({
             <h3>{title}</h3>
             <div>
                 <input/>
-                <Button title="➕"/>
+                <Button title="➕" onClick={()=>createTask('1')}/>
             </div>
             <ul>
                 {listItem}
             </ul>
             <div>
-                <Button onClick={()=>filterTasks('all')} title={'All'}/>
-                <Button onClick={()=>filterTasks('active')} title={'Active'}/>
-                <Button onClick={()=>filterTasks('completed')} title={'Completed'}/>
+                <Button onClick={() => filterTasks('all')} title={'All'}/>
+                <Button onClick={() => filterTasks('active')} title={'Active'}/>
+                <Button onClick={() => filterTasks('completed')} title={'Completed'}/>
             </div>
         </div>
     );
