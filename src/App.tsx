@@ -30,7 +30,7 @@ export const App = () => {
     }
     const createTask = (task: string) => {
         const newTask: Task = {id: v1(), title: task, isDone: false};
-        setTasks([...tasks, newTask])
+        setTasks([ newTask, ...tasks])
     }
     return (
         <div className="app">

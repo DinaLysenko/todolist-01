@@ -1,5 +1,7 @@
 import {Button} from './Button.tsx';
 import {FilterType} from './App.tsx';
+import {useState} from 'react';
+
 
 export type Task = {
     id: string
@@ -21,6 +23,8 @@ export const TodolistItem = ({
                                  createTask,
                              }: Props) => {
 
+
+    const [taskTitle, setTaskTitle] = useState<string>('');
     const listItem = tasks.length == 0 ? 'Тасок нет' : tasks.map(t => {
         const onClickHandler = () => {
             deleteTask(t.id)
@@ -32,14 +36,21 @@ export const TodolistItem = ({
             </li>
         )
     })
-
+    const createTaskHandler = () => {
+        createTask(taskTitle)
+        setTaskTitle('')
+    }
     return (
         <div>
             <h3>{title}</h3>
             <div>
-                <input/>
-                <Button title="➕" onClick={()=>createTask('1')}/>
+                <input value={taskTitle} onChange={(e) => setTaskTitle(e.currentTarget.value)}/>
+                <Button title="➕"
+                        onClick={createTaskHandler}
+                        disabled={taskTitle.length === 0 || taskTitle.length > 15}/>
             </div>
+            {taskTitle.length === 0 && <div>Enter title and click button</div>}
+            {taskTitle.length > 15 && <div style={{color: 'red'}}>Your title more than 15 characters</div>}
             <ul>
                 {listItem}
             </ul>
