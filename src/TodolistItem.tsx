@@ -1,6 +1,6 @@
 import {Button} from './Button.tsx';
 import {FilterType} from './App.tsx';
-import {useState} from 'react';
+import {ChangeEvent, KeyboardEvent, useState} from 'react';
 
 
 export type Task = {
@@ -25,6 +25,8 @@ export const TodolistItem = ({
 
 
     const [taskTitle, setTaskTitle] = useState<string>('');
+
+    const taskTitleValidation = taskTitle.length > 0 && taskTitle.length <= 15;
     const listItem = tasks.length == 0 ? 'Тасок нет' : tasks.map(t => {
         const onClickHandler = () => {
             deleteTask(t.id)
@@ -36,20 +38,32 @@ export const TodolistItem = ({
             </li>
         )
     })
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setTaskTitle(e.currentTarget.value)
+    }
     const createTaskHandler = () => {
         createTask(taskTitle)
         setTaskTitle('')
+    }
+    const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter' && taskTitleValidation) {
+            createTaskHandler()
+        }
     }
     return (
         <div>
             <h3>{title}</h3>
             <div>
-                <input value={taskTitle} onChange={(e) => setTaskTitle(e.currentTarget.value)}/>
+                <input value={taskTitle}
+                       onChange={onChangeHandler}
+                       onKeyDown={onKeyDownHandler}
+                />
                 <Button title="➕"
                         onClick={createTaskHandler}
                         disabled={taskTitle.length === 0 || taskTitle.length > 15}/>
             </div>
             {taskTitle.length === 0 && <div>Enter title and click button</div>}
+            {taskTitleValidation && <div>Max length to be 15 characters</div>}
             {taskTitle.length > 15 && <div style={{color: 'red'}}>Your title more than 15 characters</div>}
             <ul>
                 {listItem}
