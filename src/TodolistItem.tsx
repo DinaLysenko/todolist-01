@@ -42,7 +42,7 @@ export const TodolistItem = ({
             changeTaskStatus(t.id, e.currentTarget.checked, todolist.id)
         }
         return (
-            <li key={t.id} className={t.isDone ? 'is-done' : ''}>
+            <li key={key} className={t.isDone ? 'is-done' : ''}>
                 <input type="checkbox"
                        checked={t.isDone}
                        onChange={changeTaskStatusHandler}

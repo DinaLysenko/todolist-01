@@ -9,6 +9,7 @@ export type Todolist = {
     title: string
     filter: FilterType
 }
+export type Tasks = Record<string, Task[]>
 const todolistId1 = v1()
 const todolistId2 = v1()
 
@@ -17,7 +18,7 @@ export const App = () => {
         {id: todolistId1, title: 'What to learn', filter: 'all'},
         {id: todolistId2, title: 'What to buy', filter: 'all'},
     ]);
-    const [tasks, setTasks] = useState({
+    const [tasks, setTasks] = useState<Tasks>({
         [todolistId1]: [
             {id: v1(), title: 'HTML&CSS', isDone: true},
             {id: v1(), title: 'JS', isDone: true},
@@ -38,13 +39,13 @@ export const App = () => {
     }
     const createTask = (task: string, todolistId: Todolist['id']) => {
         const newTask: Task = {id: v1(), title: task, isDone: false};
-        setTasks({...tasks, [todolistId]: [newTask, ...tasks[todolistId] ]   });
+        setTasks({...tasks, [todolistId]: [newTask, ...tasks[todolistId]]});
     }
     const changeTaskStatus = (taskId: Task['id'], isDone: Task['isDone'], todolistId: Todolist['id']) => {
         setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, isDone} : t)})
     }
-    const deleteTodolist=(todolistId: Todolist['id'])=>{
-        setTodolists(todolists.filter(t=>t.id !== todolistId))
+    const deleteTodolist = (todolistId: Todolist['id']) => {
+        setTodolists(todolists.filter(t => t.id !== todolistId))
         delete tasks[todolistId];
         setTasks({...tasks})
     }
