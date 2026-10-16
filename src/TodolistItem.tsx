@@ -1,8 +1,12 @@
-import {Button} from './Button.tsx';
+
 import {FilterType, Todolist} from './App.tsx';
 import {ChangeEvent} from 'react';
 import {CreateItemForm} from './components/CreateItemForm.tsx';
 import {EditableSpan} from './components/EditableSpan.tsx';
+import  IconButton  from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Button from '@mui/material/Button';
+
 
 
 export type Task = {
@@ -54,7 +58,10 @@ export const TodolistItem = ({
                        onChange={changeTaskStatusHandler}
                 />
                 <EditableSpan title={t.title} changeTitle={taskChangeHandler}/>
-                <button onClick={deleteTaskHandler}>❌</button>
+                <IconButton aria-label="delete"
+                            onClick={deleteTaskHandler}>
+                    <DeleteIcon />
+                </IconButton>
             </li>
         )
     })
@@ -72,7 +79,10 @@ export const TodolistItem = ({
         <div>
             <div className="container">
                 <h3><EditableSpan changeTitle={changeTodolistHandler} title={todolist.title}/></h3>
-                <Button title={'❌'} onClick={deleteTodolistHandler}/>
+                <IconButton aria-label="delete"
+                            onClick={deleteTodolistHandler}>
+                    <DeleteIcon />
+                </IconButton>
             </div>
             <CreateItemForm createItem={createItemHandler}/>
             <ul>
@@ -80,14 +90,17 @@ export const TodolistItem = ({
             </ul>
             <div>
                 <Button onClick={() => filterTasks('all', todolist.id)}
-                        className={todolist.filter === 'all' ? 'active-filter' : ''}
-                        title={'All'}/>
+                        variant={todolist.filter === 'all' ? 'outlined' : 'text'}
+                        color={'inherit'}>All
+                </Button>
                 <Button onClick={() => filterTasks('active', todolist.id)}
-                        className={todolist.filter === 'active' ? 'active-filter' : ''}
-                        title={'Active'}/>
+                        variant={todolist.filter === 'active' ? 'outlined' : 'text'}
+                        color={'primary'}>Active
+                </Button>
                 <Button onClick={() => filterTasks('completed', todolist.id)}
-                        className={todolist.filter === 'completed' ? 'active-filter' : ''}
-                        title={'Completed'}/>
+                        variant={todolist.filter === 'completed' ? 'outlined' : 'text'}
+                        color={'secondary'}>Completed
+                </Button>
             </div>
         </div>
     );
