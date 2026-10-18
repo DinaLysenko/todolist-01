@@ -1,28 +1,11 @@
 .app {
-  padding: 30px;
-  display: flex;
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
 }
 
-.app > div {
-  margin-right: 50px;
-}
 .container {
     display: flex;
     align-items: center;
 }
-.error {
-    border: red 1px solid;
-}
 
-.error-message {
-    color: red;
-}
-.active-filter {
-    background-color: deepskyblue;
-    border: 2px solid deepskyblue;
-    border-radius: 3px;
-    color: aliceblue;
-}
-.is-done {
-    opacity: 0.5;
-}

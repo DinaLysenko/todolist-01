@@ -6,6 +6,11 @@ import {EditableSpan} from './components/EditableSpan.tsx';
 import  IconButton  from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import Box from '@mui/material/Box';
+import {containerSx, getListItemSx} from './TodolistItem.styles.ts';
 
 
 
@@ -52,17 +57,17 @@ export const TodolistItem = ({
             changeTaskTitle(todolistId, t.id, title)
         }
         return (
-            <li key={todolistId} className={t.isDone ? 'is-done' : ''}>
-                <input type="checkbox"
-                       checked={t.isDone}
-                       onChange={changeTaskStatusHandler}
-                />
-                <EditableSpan title={t.title} changeTitle={taskChangeHandler}/>
+            <ListItem key={todolistId}  sx={getListItemSx(t.isDone)}>
+                <div>
+                    <Checkbox checked={t.isDone}
+                              onChange={changeTaskStatusHandler}/>
+                    <EditableSpan title={t.title} changeTitle={taskChangeHandler}/>
+                </div>
                 <IconButton aria-label="delete"
                             onClick={deleteTaskHandler}>
                     <DeleteIcon />
                 </IconButton>
-            </li>
+            </ListItem>
         )
     })
 
@@ -85,10 +90,10 @@ export const TodolistItem = ({
                 </IconButton>
             </div>
             <CreateItemForm createItem={createItemHandler}/>
-            <ul>
+            <List>
                 {listItem}
-            </ul>
-            <div>
+            </List>
+            <Box sx={containerSx}>
                 <Button onClick={() => filterTasks('all', todolist.id)}
                         variant={todolist.filter === 'all' ? 'outlined' : 'text'}
                         color={'inherit'}>All
@@ -101,7 +106,7 @@ export const TodolistItem = ({
                         variant={todolist.filter === 'completed' ? 'outlined' : 'text'}
                         color={'secondary'}>Completed
                 </Button>
-            </div>
+            </Box>
         </div>
     );
 }
